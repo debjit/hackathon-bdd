@@ -1,4 +1,4 @@
-Hospital<?php
+<?php
 
 namespace Database\Factories;
 
@@ -19,7 +19,7 @@ class HospitalFactory extends Factory
         return [
             'name'=>fake()->name,
             'pincode'=>fake()->numberBetween(740000,742200),
-            'address'=> fake()->address,
+            'address'=> fake('en_IN')->address(),
             'notes'=>fake()->text()
         ];
     }
