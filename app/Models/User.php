@@ -20,6 +20,12 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'blood_group',
+        'primary_contact',
+        'secondary_contact',
+        'emergency_contact',
+        'donor',
+        'last_donated',
         'password',
     ];
 
@@ -39,6 +45,7 @@ class User extends Authenticatable
      * @var array<string, string>
      */
     protected $casts = [
+        'date'=>'last_donated',
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
