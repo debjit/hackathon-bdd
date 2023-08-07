@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('requisitions', function (Blueprint $table) {
             $table->id();
             $table->string('email');
-            $table->foreignId('user_id')->nullable()->constrained('users');
+            $table->foreignId('creator_id')->nullable()->constrained('users');
             $table->foreignId('hospital_id')->nullable()->constrained('hospitals');
             $table->string('patient_name');
             $table->string('primary_contact');

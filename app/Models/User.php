@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -46,12 +47,18 @@ class User extends Authenticatable
      * @var array<string, string>
      */
     protected $casts = [
-        'date'=>'last_donated',
+        'date' => 'last_donated',
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
 
-    function donations(): HasMany {
+    public function donations(): HasMany
+    {
         return $this->hasMany(Donation::class);
+    }
+
+    public function requisitions(): BelongsToMany
+    {
+        return $this->belongsToMany(Requisition::class);
     }
 }

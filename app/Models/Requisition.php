@@ -4,13 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Requisition extends Model
 {
     use HasFactory;
     protected $fillable=[
         'email',
-        'user_id',
+        'creator_id',
         'hospital_id',
         'patient_name',
         'primary_contact',
@@ -25,4 +27,11 @@ class Requisition extends Model
         'urgent',
         'notes'
     ];
+
+    public function users() : BelongsToMany {
+        return $this->belongsToMany(User::class);
+    }
+    public function donations() : HasMany {
+        return $this->hasMany(Donation::class);
+    }
 }
