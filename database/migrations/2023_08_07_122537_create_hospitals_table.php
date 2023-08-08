@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('pincode');
             $table->string('address');
+            $table->string('type')->default('gov');
             $table->text('notes')->nullable();
             $table->timestamps();
         });

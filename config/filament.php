@@ -34,6 +34,13 @@ return [
     | of the disks defined in the `config/filesystems.php`.
     |
     */
+    'pages' => [
+        'namespace' => 'App\\Filament\\Pages',
+        'path' => app_path('Filament/Pages'),
+        'register' => [
+            // Pages\Dashboard::class, <-- delete or comment this line.
+        ],
+    ],
 
     'default_filesystem_disk' => env('FILAMENT_FILESYSTEM_DISK', 'public'),
 

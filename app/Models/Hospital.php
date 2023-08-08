@@ -8,10 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Hospital extends Model
 {
     use HasFactory;
-
+// Type has gov,private, sponsored, I do not know any other things
     protected $fillale = [
-        'user_id',
-        'unit',
+        'name',
+        'pincode',
+        'address',
+        'type',
         'notes'
     ];
 }
