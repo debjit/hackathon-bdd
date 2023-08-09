@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\RequisitionResource\Pages;
 use App\Filament\Resources\RequisitionResource\RelationManagers;
+use App\Filament\Resources\RequisitionResource\RelationManagers\UsersRelationManager;
 use App\Models\Requisition;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
@@ -192,7 +193,7 @@ class RequisitionResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            UsersRelationManager::class,
         ];
     }
 
