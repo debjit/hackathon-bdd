@@ -95,12 +95,16 @@ class UserResource extends Resource
     {
         return $table
             ->columns([
+                // Tables\Columns\Layout\Stack::make([
+                // ]),
                 TextColumn::make('name')
                     ->searchable(isIndividual: true)
                     // ->html()
                     ->size(TextColumn\TextColumnSize::Large)
                     // ->suffix(fn (User $record) => $record->donations()->count() ? "({$record->donations()->count()})":"ooo")
                     ->description(fn (User $record) => $record->email),
+
+
                 IconColumn::make('donor')
                     ->boolean()
                     ->sortable(),

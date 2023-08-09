@@ -41,4 +41,11 @@ class Requisition extends Model
     public function hospital() : BelongsTo {
         return $this->belongsTo(Hospital::class);
     }
+
+    public function required_blood_group(): HasOne{
+        return $this->hasOne(BloodGroup::class,'id','blood_group');
+    }
+    public function type(): BelongsTo{
+        return $this->BelongsTo(DonationType::class,'donation_type','id');
+    }
 }

@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('secondary_contact')->nullable();
             $table->string('emergency_contact')->nullable();
             $table->tinyInteger('blood_group')->unsigned();
-            $table->string('donation_type')->default('whole_blood');
+            $table->tinyInteger('donation_type')->unsigned()->default(1);
             $table->tinyInteger('unit')->unsigned()->default(1);
             $table->datetime('required_on');
             $table->tinyInteger('status');// 0= not approved, 1=approved, 2 = Finished.
