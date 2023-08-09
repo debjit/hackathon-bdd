@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\HospitalResource\Pages;
 use App\Filament\Resources\HospitalResource\RelationManagers;
+use App\Filament\Resources\HospitalResource\RelationManagers\RequisitionsRelationManager;
 use App\Models\Hospital;
 use Filament\Forms;
 use Filament\Forms\Components\MarkdownEditor;
@@ -86,7 +87,7 @@ class HospitalResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RequisitionsRelationManager::class,
         ];
     }
 
