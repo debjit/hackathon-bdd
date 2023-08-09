@@ -58,13 +58,12 @@ class HospitalResource extends Resource
                 TextColumn::make('pincode'),
                 TextColumn::make('address'),
                 SelectColumn::make('type')
-                ->disabled()
+                    ->disabled()
                     ->options([
                         'gov' => 'Government',
                         'private' => 'Private',
                         'sponsored' => 'Government Sponsored',
                     ]),
-
             ])
             ->filters([
                 //
