@@ -4,6 +4,8 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\UserResource\Pages;
 use App\Filament\Resources\UserResource\RelationManagers;
+use App\Filament\Resources\UserResource\RelationManagers\DonationsRelationManager;
+use App\Filament\Resources\UserResource\RelationManagers\RequisitionsRelationManager;
 use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
@@ -16,6 +18,7 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\SelectColumn;
+use Filament\Tables\Columns\Summarizers\Count;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Filters\Filter;
@@ -94,10 +97,13 @@ class UserResource extends Resource
             ->columns([
                 TextColumn::make('name')
                     ->searchable(isIndividual: true)
-                    ->html()
+                    // ->html()
                     ->size(TextColumn\TextColumnSize::Large)
+                    // ->suffix(fn (User $record) => $record->donations()->count() ? "({$record->donations()->count()})":"ooo")
                     ->description(fn (User $record) => $record->email),
-                IconColumn::make('donor')->sortable()->boolean(),
+                IconColumn::make('donor')
+                    ->boolean()
+                    ->sortable(),
                 TextColumn::make('last_donated')->searchable(isIndividual: true)->since()
                     ->description(fn (User $record) => $record->last_donated)
                     ->sortable(),
@@ -152,7 +158,8 @@ class UserResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            DonationsRelationManager::class,
+            RequisitionsRelationManager::class,
         ];
     }
     public static function getGloballySearchableAttributes(): array

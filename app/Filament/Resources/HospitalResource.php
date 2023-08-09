@@ -6,6 +6,7 @@ use App\Filament\Resources\HospitalResource\Pages;
 use App\Filament\Resources\HospitalResource\RelationManagers;
 use App\Models\Hospital;
 use Filament\Forms;
+use Filament\Forms\Components\MarkdownEditor;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -46,7 +47,7 @@ class HospitalResource extends Resource
                     // ->number_format()
                     ->minLength(6)
                     ->maxLength(6),
-                RichEditor::make('notes')->columnSpan('full')
+                    MarkdownEditor::make('notes')->columnSpan('full')
             ]);
     }
 

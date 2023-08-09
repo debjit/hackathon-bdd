@@ -16,3 +16,5 @@ $blood_groups = [
 ## Todo
 - [ ] Add who can donate blood using a switch, action I guess.
 - [ ] Register User / new user
+- [ ] Add orders like sortable field for user
+- [ ] Add Status like field in users field
