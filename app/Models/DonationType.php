@@ -10,8 +10,8 @@ class DonationType extends Model
 {
     use HasFactory;
 
-    // public function requisitions(): HasMany
-    // {
-    //     return $this->hasMany(Requisition::class,'id', 'donation_type');
-    // }
+    public function requisitions(): HasMany
+    {
+        return $this->hasMany(Requisition::class,'id', 'donation_type');
+    }
 }

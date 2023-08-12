@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
         \App\Models\User::factory()->create([
             'name' => 'Super Admin',
             'email' => 'admin@deb.local',
-            // 'password'=> 'secret123'
+            // 'password'=> 'password'
         ]);
         $bloodGroupData = [
             ['id' => 1, 'name' => 'A+'],
@@ -44,7 +44,7 @@ class DatabaseSeeder extends Seeder
         ];
 
         // Insert the Blood Donation Group Data
-        DB::table('donation_types')->insert($bloodGroupData);
+        DB::table('donation_types')->insert($bloodDonationTypes);
         // \App\Models\User::factory(10)->create();
 
 
