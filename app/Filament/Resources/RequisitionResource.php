@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\RequisitionResource\Pages;
 use App\Filament\Resources\RequisitionResource\RelationManagers;
+use App\Filament\Resources\RequisitionResource\RelationManagers\DonationsRelationManager;
 use App\Filament\Resources\RequisitionResource\RelationManagers\UsersRelationManager;
 use App\Models\Requisition;
 use Filament\Forms;
@@ -63,7 +64,7 @@ class RequisitionResource extends Resource
                         TextInput::make('primary_contact')
                             ->prefixIcon('heroicon-o-phone')
                             ->required()
-                            ->tel()
+                            ->numeric()
                             ->length(10),
                         TextInput::make('secondary_contact')
                             ->prefixIcon('heroicon-o-phone')
@@ -90,9 +91,10 @@ class RequisitionResource extends Resource
                             ->numeric()
                             ->required()
                             ->maxLength(2),
-                        Select::make('donation_type')->options([
-                            1 => 'Whole Blood'
-                        ])->required(),
+                        // Select::make('donation_type')->options([
+                        //     1 => 'Whole Blood'
+                        // ])->required(),
+                        Select::make('donation_type')->relationship('type', 'name')->required(true),
                         Select::make('blood_group')->options(static::$defaultBloodGroup)->required(true),
                         DatePicker::make('required_on')->required(),
                     ])
@@ -132,12 +134,9 @@ class RequisitionResource extends Resource
                 IconColumn::make('urgent')
                     ->boolean()
                     ->sortable(),
-
-                SelectColumn::make('blood_group')
-                    ->disabled()
-                    // ->searchable(isIndividual: true)
-                    ->sortable()
-                    ->options(static::$defaultBloodGroup),
+                TextColumn::make('required_blood_group.name')
+                    ->badge()
+                    ->sortable(),
                 TextColumn::make('unit')
                     ->badge()
                     ->description(fn ($record) => $record->type->name),
@@ -146,7 +145,6 @@ class RequisitionResource extends Resource
                     ->description(fn ($record) => $record->secondary_contact),
                 TextColumn::make('emergency_contact')
                     ->searchable(isIndividual: true),
-
             ])
             ->filters([
                 SelectFilter::make('blood_group')
@@ -177,6 +175,7 @@ class RequisitionResource extends Resource
     {
         return [
             UsersRelationManager::class,
+            DonationsRelationManager::class
         ];
     }
 
