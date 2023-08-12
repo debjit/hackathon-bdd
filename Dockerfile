@@ -37,4 +37,4 @@ EXPOSE 80
 
 # Adjusting Apache configurations
 RUN a2enmod rewrite
-COPY apache-config.conf /etc/apache2/sites-available/000-default.conf
+COPY docker/apache-config.conf /etc/apache2/sites-available/000-default.conf
