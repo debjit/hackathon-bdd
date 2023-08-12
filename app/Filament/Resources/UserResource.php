@@ -48,7 +48,10 @@ class UserResource extends Resource
                         Toggle::make('donor')
                             ->label('Is wiling Donate?')
                             ->required(),
-                        Select::make('blood_group')->options([
+                        Select::make('blood_group')
+                        // ->relationship('bloodGroup','name')
+                        // ->required(),
+                        ->options([
                             1 => 'A+',
                             2 => 'B+',
                             3 => 'AB+',
@@ -115,18 +118,18 @@ class UserResource extends Resource
                     ->searchable(isIndividual: true)
                     ->description(fn (User $record) => $record->secondary_contact),
                 TextColumn::make('emergency_contact')->searchable(),
-                SelectColumn::make('blood_group')
-                    ->disabled()
-                    ->options([
-                        1 => 'A+',
-                        2 => 'B+',
-                        3 => 'AB+',
-                        4 => 'O+',
-                        5 => 'A-',
-                        6 => 'B-',
-                        7 => 'AB-',
-                        8 => 'O-'
-                    ]),
+                TextColumn::make('bloodGroup.name')
+                    // ->disabled()
+                    // ->options([
+                    //     1 => 'A+',
+                    //     2 => 'B+',
+                    //     3 => 'AB+',
+                    //     4 => 'O+',
+                    //     5 => 'A-',
+                    //     6 => 'B-',
+                    //     7 => 'AB-',
+                    //     8 => 'O-'
+                    // ]),
             ])
             ->filters([
                 Filter::make('donor')

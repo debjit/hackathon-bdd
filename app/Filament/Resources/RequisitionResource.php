@@ -32,6 +32,16 @@ class RequisitionResource extends Resource
     protected static ?string $model = Requisition::class;
     protected static ?string $label = "Blood Requisition";
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static $defaultBloodGroup = [
+        1 => 'A+',
+        2 => 'B+',
+        3 => 'AB+',
+        4 => 'O+',
+        5 => 'A-',
+        6 => 'B-',
+        7 => 'AB-',
+        8 => 'O-'
+    ];
 
     public static function form(Form $form): Form
     {
@@ -83,16 +93,7 @@ class RequisitionResource extends Resource
                         Select::make('donation_type')->options([
                             1 => 'Whole Blood'
                         ])->required(),
-                        Select::make('blood_group')->options([
-                            1 => 'A+',
-                            2 => 'B+',
-                            3 => 'AB+',
-                            4 => 'O+',
-                            5 => 'A-',
-                            6 => 'B-',
-                            7 => 'AB-',
-                            8 => 'O-'
-                        ])->required(true),
+                        Select::make('blood_group')->options(static::$defaultBloodGroup)->required(true),
                         DatePicker::make('required_on')->required(),
                     ])
                     ->collapsed()
@@ -136,16 +137,7 @@ class RequisitionResource extends Resource
                     ->disabled()
                     // ->searchable(isIndividual: true)
                     ->sortable()
-                    ->options([
-                        1 => 'A+',
-                        2 => 'B+',
-                        3 => 'AB+',
-                        4 => 'O+',
-                        5 => 'A-',
-                        6 => 'B-',
-                        7 => 'AB-',
-                        8 => 'O-'
-                    ]),
+                    ->options(static::$defaultBloodGroup),
                 TextColumn::make('unit')
                     ->badge()
                     ->description(fn ($record) => $record->type->name),
@@ -158,16 +150,7 @@ class RequisitionResource extends Resource
             ])
             ->filters([
                 SelectFilter::make('blood_group')
-                    ->options([
-                        1 => 'A+',
-                        2 => 'B+',
-                        3 => 'AB+',
-                        4 => 'O+',
-                        5 => 'A-',
-                        6 => 'B-',
-                        7 => 'AB-',
-                        8 => 'O-'
-                    ]),
+                    ->options(static::$defaultBloodGroup),
                 // Filter::make('urgent')
 
             ])

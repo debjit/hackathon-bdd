@@ -14,7 +14,7 @@ $blood_groups = [
 
 ```
 ## Todo
-
+- [ ] Create a setup file for first time user.
 - [ ] Add who can donate blood using a switch, action I guess.
 - [ ] Register User / new user.
 - [ ] Add orders like sortable field for user.
