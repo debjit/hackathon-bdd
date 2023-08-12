@@ -6,6 +6,7 @@ use App\Filament\Resources\RequisitionResource\Pages;
 use App\Filament\Resources\RequisitionResource\RelationManagers;
 use App\Filament\Resources\RequisitionResource\RelationManagers\DonationsRelationManager;
 use App\Filament\Resources\RequisitionResource\RelationManagers\UsersRelationManager;
+use App\Filament\Resources\RequisitionResource\Widgets\ResourceStatsOverview;
 use App\Models\Requisition;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
@@ -187,6 +188,15 @@ class RequisitionResource extends Resource
         return [
             UsersRelationManager::class,
             DonationsRelationManager::class
+        ];
+    }
+
+    // Todo
+    // Not Working
+    public static function getWidgets(): array
+    {
+        return [
+            ResourceStatsOverview::class,
         ];
     }
 

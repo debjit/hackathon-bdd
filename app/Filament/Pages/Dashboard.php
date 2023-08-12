@@ -8,6 +8,8 @@ use Filament\Pages\Dashboard as BaseDashboard;
 class Dashboard extends BaseDashboard
 {
     // protected static ?string $title = 'Home';
+    protected int | string | array $columnSpan = 'full';
+
     public function getTitle(): string | Htmlable
     {
         return __('Home');
