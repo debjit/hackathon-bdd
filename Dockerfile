@@ -1,38 +1,28 @@
 FROM php:8.1-apache
 
-# Install necessary libraries
-RUN apt-get update && apt-get install -y \
-    libonig-dev \
-    libzip-dev
-
-# Install PHP extensions
-RUN docker-php-ext-install \
-    mbstring \
-    zip
-
-# Copy Laravel application
-COPY . /var/www/html
-
-# Set working directory
 WORKDIR /var/www/html
 
-# Install Composer
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+COPY . .
 
-# Install dependencies
-RUN composer install
+RUN apt-get update && apt-get install -y \
+    unzip \
+    libzip-dev \
+    && docker-php-ext-install zip \
+    && php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
+    && php composer-setup.php --install-dir=/usr/local/bin --filename=composer \
+    && php -r "unlink('composer-setup.php');" \
+    && composer install --no-scripts --no-autoloader --prefer-dist
 
-# Change ownership of our applications
-RUN chown -R www-data:www-data /var/www/html
+RUN a2enmod rewrite
+COPY ./docker/apache/000-default.conf /etc/apache2/sites-available/
+ENV APACHE_DOCUMENT_ROOT /var/www/html/public
 
-RUN docker-php-ext-install mbstring
+RUN php artisan key:generate \
+    && composer dump-autoload \
+    && php artisan config:cache \
+    && php artisan route:cache \
+    && php artisan view:cache
 
-COPY .env.example .env
-RUN php artisan key:generate
-
-# Expose port 80
 EXPOSE 80
 
-# Adjusting Apache configurations
-RUN a2enmod rewrite
-COPY docker/apache-config.conf /etc/apache2/sites-available/000-default.conf
+CMD ["apache2-foreground"]
