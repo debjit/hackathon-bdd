@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 class Requisition extends Model
 {
     use HasFactory;
+
     protected $fillable=[
         'email',
         'creator_id',
@@ -28,6 +29,10 @@ class Requisition extends Model
         'image',
         'urgent',
         'notes'
+    ];
+    protected $casts = [
+        'status' => 'boolean',
+        'urgent' => 'boolean',
     ];
 
     public function users() : BelongsToMany {

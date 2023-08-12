@@ -112,7 +112,7 @@ class RequisitionResource extends Resource
                             ->imageEditor(),
 
                         Toggle::make('status')
-                            ->label('Accept this requisition ?')
+                            ->label('Active Requisition?')
                             ->required(),
                     ])
                     ->collapsed(),
@@ -124,6 +124,13 @@ class RequisitionResource extends Resource
     {
         return $table
             ->columns([
+                IconColumn::make('status')
+                    ->boolean()
+                    ->sortable(),
+                TextColumn::make('required_blood_group.name')
+                        ->label('Group')
+                        ->badge()
+                        ->sortable(),
                 TextColumn::make('patient_name')->badge()
                     ->description(fn ($record) => $record->email)
                     ->searchable(isIndividual: true),
@@ -134,22 +141,26 @@ class RequisitionResource extends Resource
                 IconColumn::make('urgent')
                     ->boolean()
                     ->sortable(),
-                TextColumn::make('required_blood_group.name')
-                    ->badge()
-                    ->sortable(),
+
                 TextColumn::make('unit')
                     ->badge()
                     ->description(fn ($record) => $record->type->name),
-                TextColumn::make('primary_contact')
+                TextColumn::make('primary_contact')->label('Primary/Emergency contact')
                     ->searchable(isIndividual: true)
-                    ->description(fn ($record) => $record->secondary_contact),
-                TextColumn::make('emergency_contact')
-                    ->searchable(isIndividual: true),
+                    ->description(fn ($record) => $record->emergency_contact),
+                // TextColumn::make('emergency_contact')
+                //     ->searchable(isIndividual: true),
             ])
             ->filters([
                 SelectFilter::make('blood_group')
                     ->options(static::$defaultBloodGroup),
-                // Filter::make('urgent')
+                Filter::make('urgent')
+                    ->query(fn (Builder $query): Builder => $query->where('urgent', 1))
+                    ->toggle(),
+                Filter::make('status')
+                    ->label('Is Open')
+                    ->query(fn (Builder $query): Builder => $query->where('status', 1))
+                    ->toggle()
 
             ])
             ->actions([
@@ -167,8 +178,8 @@ class RequisitionResource extends Resource
             ->groups([
                 'required_on',
                 'required_blood_group.name',
-            ])
-            ->defaultGroup('required_on');
+            ]);
+            // ->defaultGroup('required_on');
     }
 
     public static function getRelations(): array

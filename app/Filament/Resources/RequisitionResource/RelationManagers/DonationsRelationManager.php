@@ -24,8 +24,9 @@ class DonationsRelationManager extends RelationManager
                     ->maxLength(255),
                     Forms\Components\Select::make('user_id')
                     ->relationship('user','name')
-                    ->required()
-                    // ->maxLength(255),
+                    ->required(),
+                    Forms\Components\TextInput::make('notes')
+                    ->maxLength(255),
             ]);
     }
 
@@ -35,7 +36,9 @@ class DonationsRelationManager extends RelationManager
             ->recordTitleAttribute('unit')
             ->columns([
                 Tables\Columns\TextColumn::make('unit'),
-                Tables\Columns\TextColumn::make('donation'),
+                Tables\Columns\TextColumn::make('user.name'),
+                Tables\Columns\TextColumn::make('user.created_at')->dateTime()
+
             ])
             ->filters([
                 //
