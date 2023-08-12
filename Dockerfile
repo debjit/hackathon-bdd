@@ -1,28 +1,40 @@
+#Dockerfile Example on running PHP Laravel app using Apache web server
+
 FROM php:8.1-apache
 
+# Install necessary libraries
+RUN apt-get update && apt-get install -y \
+    libonig-dev \
+    libzip-dev
+
+# Install PHP extensions
+RUN docker-php-ext-install \
+    mbstring \
+    zip
+
+# Copy Laravel application
+COPY . /var/www/html
+
+# Set working directory
 WORKDIR /var/www/html
 
-COPY . .
+# Install Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-RUN apt-get update && apt-get install -y \
-    unzip \
-    libzip-dev \
-    && docker-php-ext-install zip \
-    && php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
-    && php composer-setup.php --install-dir=/usr/local/bin --filename=composer \
-    && php -r "unlink('composer-setup.php');" \
-    && composer install --no-scripts --no-autoloader --prefer-dist
+# Install dependencies
+RUN composer install
 
-RUN a2enmod rewrite
-COPY ./docker/apache/000-default.conf /etc/apache2/sites-available/
-ENV APACHE_DOCUMENT_ROOT /var/www/html/public
+# Change ownership of our applications
+RUN chown -R www-data:www-data /var/www/html
 
-RUN php artisan key:generate \
-    && composer dump-autoload \
-    && php artisan config:cache \
-    && php artisan route:cache \
-    && php artisan view:cache
+RUN docker-php-ext-install mbstring
 
+COPY .env.example .env
+RUN php artisan key:generate
+
+# Expose port 80
 EXPOSE 80
 
-CMD ["apache2-foreground"]
+# Adjusting Apache configurations
+RUN a2enmod rewrite
+COPY apache-config.conf /etc/apache2/sites-available/000-default.conf
