@@ -5,7 +5,8 @@ FROM php:8.1-apache
 # Install necessary libraries
 RUN apt-get update && apt-get install -y \
     libonig-dev \
-    libzip-dev
+    libzip-dev\
+    && curl -sLS https://getcomposer.org/installer | php -- --install-dir=/usr/bin/ --filename=composer
 
 # Install PHP extensions
 RUN docker-php-ext-install \
@@ -19,7 +20,7 @@ COPY . /var/www/html
 WORKDIR /var/www/html
 
 # Install Composer
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+# COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 # Install dependencies
 RUN composer install
