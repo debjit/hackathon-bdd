@@ -12,7 +12,7 @@ class Dashboard extends BaseDashboard
 
     public function getTitle(): string|Htmlable
     {
-        return __('Home');
+        return __('Dashboard');
     }
 
     // Customize properties or methods here

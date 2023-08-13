@@ -1,5 +1,8 @@
 # Blood Donation Drive
-
+```
+Username: admin@deb.local
+Password: password
+```
 ```
 $blood_groups = [
     1 => 'A+',
