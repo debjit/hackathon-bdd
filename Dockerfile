@@ -1,35 +1,38 @@
-# Use the official PHP with Apache image as the base image
 FROM php:8.1-apache
 
-# Copy the Apache configuration file into the container
-COPY docker/apache-config.conf /etc/apache2/sites-available/000-default.conf
+# Install necessary libraries
+RUN apt-get update && apt-get install -y \
+    libonig-dev \
+    libzip-dev
 
-# Enable Apache module for URL rewriting
-RUN a2enmod rewrite
+# Install PHP extensions
+RUN docker-php-ext-install \
+    mbstring \
+    zip
 
-# Set the working directory inside the container
-WORKDIR /var/www/html
-
-# Install required PHP extensions and other dependencies
-RUN apt-get update && \
-    apt-get install -y \
-        libzip-dev \
-        zip \
-        unzip && \
-    docker-php-ext-install zip && \
-    rm -rf /var/lib/apt/lists/*
-
-# Install Composer globally
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
-
-# Copy the Laravel application files into the container
+# Copy Laravel application
 COPY . /var/www/html
 
-# Give ownership of the working directory to the www-data user (Apache user)
+# Set working directory
+WORKDIR /var/www/html
+
+# Install Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+# Install dependencies
+RUN composer install
+
+# Change ownership of our applications
 RUN chown -R www-data:www-data /var/www/html
 
-# Expose port 80 (default for Apache)
+RUN docker-php-ext-install mbstring
+
+COPY .env.example .env
+RUN php artisan key:generate
+
+# Expose port 80
 EXPOSE 80
 
-# Start the Apache web server
-CMD ["apache2-foreground"]
+# Adjusting Apache configurations
+COPY docker/apache-config.conf /etc/apache2/sites-available/000-default.conf
+RUN a2enmod rewrite
