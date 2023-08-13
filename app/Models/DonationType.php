@@ -12,6 +12,6 @@ class DonationType extends Model
 
     public function requisitions(): HasMany
     {
-        return $this->hasMany(Requisition::class,'id', 'donation_type');
+        return $this->hasMany(Requisition::class, 'id', 'donation_type');
     }
 }

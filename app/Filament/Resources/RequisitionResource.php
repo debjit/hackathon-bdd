@@ -3,7 +3,6 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\RequisitionResource\Pages;
-use App\Filament\Resources\RequisitionResource\RelationManagers;
 use App\Filament\Resources\RequisitionResource\RelationManagers\DonationsRelationManager;
 use App\Filament\Resources\RequisitionResource\RelationManagers\UsersRelationManager;
 use App\Filament\Resources\RequisitionResource\Widgets\ResourceStatsOverview;
@@ -20,20 +19,20 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\IconColumn;
-use Filament\Tables\Columns\SelectColumn;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Enums\FiltersLayout;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class RequisitionResource extends Resource
 {
     protected static ?string $model = Requisition::class;
-    protected static ?string $label = "Blood Requisition";
+
+    protected static ?string $label = 'Blood Requisition';
+
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+
     protected static $defaultBloodGroup = [
         1 => 'A+',
         2 => 'B+',
@@ -42,7 +41,7 @@ class RequisitionResource extends Resource
         5 => 'A-',
         6 => 'B-',
         7 => 'AB-',
-        8 => 'O-'
+        8 => 'O-',
     ];
 
     public static function form(Form $form): Form
@@ -129,9 +128,9 @@ class RequisitionResource extends Resource
                     ->boolean()
                     ->sortable(),
                 TextColumn::make('required_blood_group.name')
-                        ->label('Group')
-                        ->badge()
-                        ->sortable(),
+                    ->label('Group')
+                    ->badge()
+                    ->sortable(),
                 TextColumn::make('patient_name')->badge()
                     ->description(fn ($record) => $record->email)
                     ->searchable(isIndividual: true),
@@ -161,7 +160,7 @@ class RequisitionResource extends Resource
                 Filter::make('status')
                     ->label('Is Open')
                     ->query(fn (Builder $query): Builder => $query->where('status', 1))
-                    ->toggle()
+                    ->toggle(),
 
             ])
             ->actions([
@@ -180,14 +179,14 @@ class RequisitionResource extends Resource
                 'required_on',
                 'required_blood_group.name',
             ]);
-            // ->defaultGroup('required_on');
+        // ->defaultGroup('required_on');
     }
 
     public static function getRelations(): array
     {
         return [
             UsersRelationManager::class,
-            DonationsRelationManager::class
+            DonationsRelationManager::class,
         ];
     }
 

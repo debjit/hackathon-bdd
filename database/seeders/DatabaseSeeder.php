@@ -47,6 +47,5 @@ class DatabaseSeeder extends Seeder
         DB::table('donation_types')->insert($bloodDonationTypes);
         // \App\Models\User::factory(10)->create();
 
-
     }
 }

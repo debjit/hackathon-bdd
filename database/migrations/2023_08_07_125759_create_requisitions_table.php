@@ -24,7 +24,7 @@ return new class extends Migration
             $table->tinyInteger('donation_type')->unsigned()->default(1);
             $table->tinyInteger('unit')->unsigned()->default(1);
             $table->datetime('required_on');
-            $table->tinyInteger('status');// 0= not approved, 1=approved, 2 = Finished.
+            $table->tinyInteger('status'); // 0= not approved, 1=approved, 2 = Finished.
             $table->string('image')->nullable();
             $table->boolean('urgent')->default(false);
             $table->text('notes')->nullable();

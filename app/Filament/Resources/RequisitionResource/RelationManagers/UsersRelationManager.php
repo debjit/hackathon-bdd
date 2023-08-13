@@ -6,15 +6,11 @@ use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
-use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class UsersRelationManager extends RelationManager
 {
     protected static string $relationship = 'users';
-
 
     public function form(Form $form): Form
     {
@@ -41,8 +37,8 @@ class UsersRelationManager extends RelationManager
             ->headerActions([
                 // Tables\Actions\CreateAction::make(),
                 Tables\Actions\AttachAction::make()
-                ->preloadRecordSelect()
-                ->label('Add to Requisition.'),
+                    ->preloadRecordSelect()
+                    ->label('Add to Requisition.'),
             ])
             ->actions([
                 // Tables\Actions\EditAction::make(),

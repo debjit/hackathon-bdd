@@ -8,8 +8,6 @@ use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class DonationsRelationManager extends RelationManager
 {
@@ -22,10 +20,10 @@ class DonationsRelationManager extends RelationManager
                 Forms\Components\TextInput::make('unit')
                     ->required()
                     ->maxLength(255),
-                    Forms\Components\Select::make('user_id')
-                    ->relationship('user','name')
+                Forms\Components\Select::make('user_id')
+                    ->relationship('user', 'name')
                     ->required(),
-                    Forms\Components\TextInput::make('notes')
+                Forms\Components\TextInput::make('notes')
                     ->maxLength(255),
             ]);
     }
@@ -37,7 +35,7 @@ class DonationsRelationManager extends RelationManager
             ->columns([
                 Tables\Columns\TextColumn::make('unit'),
                 Tables\Columns\TextColumn::make('user.name'),
-                Tables\Columns\TextColumn::make('user.created_at')->dateTime()
+                Tables\Columns\TextColumn::make('user.created_at')->dateTime(),
 
             ])
             ->filters([
@@ -59,7 +57,8 @@ class DonationsRelationManager extends RelationManager
                 Tables\Actions\CreateAction::make(),
             ]);
     }
-    protected function mutateFormDataBeforeFill(Model $record,array $data): array
+
+    protected function mutateFormDataBeforeFill(Model $record, array $data): array
     {
         $data['requisition_id'] = $record->id;
 

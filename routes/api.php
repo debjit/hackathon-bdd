@@ -20,6 +20,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 Route::get('/requisitions', function () {
     return response()->json([
-        'data' => Requisition::all()
+        'data' => Requisition::all(),
     ]);
 });

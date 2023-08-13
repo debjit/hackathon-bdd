@@ -14,6 +14,7 @@ class ViewRequisition extends ViewRecord
     {
         return true;
     }
+
     protected function getHeaderActions(): array
     {
         return [

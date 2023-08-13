@@ -3,6 +3,8 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Filament\Models\Contracts\FilamentUser;
+use Filament\Panel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -10,8 +12,6 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use Filament\Models\Contracts\FilamentUser;
-use Filament\Panel;
 
 class User extends Authenticatable implements FilamentUser
 {
@@ -22,6 +22,7 @@ class User extends Authenticatable implements FilamentUser
         // return str_ends_with($this->email, '@deb.local') && $this->hasVerifiedEmail();
         return true;
     }
+
     /**
      * The attributes that are mass assignable.
      *
@@ -70,7 +71,8 @@ class User extends Authenticatable implements FilamentUser
         return $this->belongsToMany(Requisition::class);
     }
 
-    public function bloodGroup(): HasOne{
-        return $this->hasOne(BloodGroup::class,'id','blood_group');
+    public function bloodGroup(): HasOne
+    {
+        return $this->hasOne(BloodGroup::class, 'id', 'blood_group');
     }
 }

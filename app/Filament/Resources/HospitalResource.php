@@ -3,12 +3,9 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\HospitalResource\Pages;
-use App\Filament\Resources\HospitalResource\RelationManagers;
 use App\Filament\Resources\HospitalResource\RelationManagers\RequisitionsRelationManager;
 use App\Models\Hospital;
-use Filament\Forms;
 use Filament\Forms\Components\MarkdownEditor;
-use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
@@ -17,8 +14,6 @@ use Filament\Tables;
 use Filament\Tables\Columns\SelectColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class HospitalResource extends Resource
 {
@@ -40,7 +35,7 @@ class HospitalResource extends Resource
                         'private' => 'Private',
                         'sponsored' => 'Government Sponsored',
                     ]),
-                TextInput::make("address")
+                TextInput::make('address')
                     ->required()
                     ->maxLength(255),
                 TextInput::make('pincode')
@@ -48,7 +43,7 @@ class HospitalResource extends Resource
                     // ->number_format()
                     ->minLength(6)
                     ->maxLength(6),
-                    MarkdownEditor::make('notes')->columnSpan('full')
+                MarkdownEditor::make('notes')->columnSpan('full'),
             ]);
     }
 

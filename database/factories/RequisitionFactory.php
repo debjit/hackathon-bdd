@@ -26,12 +26,12 @@ class RequisitionFactory extends Factory
             'emergency_contact' => fake('en_IN')->mobileNumber(),
             'blood_group' => fake()->numberBetween(1, 8),
             'donation_type' => 'whole_blood',
-            'unit' => fake()->numberBetween(1,4),
+            'unit' => fake()->numberBetween(1, 4),
             'required_on' => fake()->dateTimeBetween('+1 day 12:00:00', '+2 days 11:59:59'),
             'status' => fake()->boolean(),
             'image' => fake()->image(),
             'urgent' => fake()->boolean(),
-            'notes' => fake()->paragraph()
+            'notes' => fake()->paragraph(),
         ];
     }
 }

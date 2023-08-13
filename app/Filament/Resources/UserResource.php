@@ -3,11 +3,9 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\UserResource\Pages;
-use App\Filament\Resources\UserResource\RelationManagers;
 use App\Filament\Resources\UserResource\RelationManagers\DonationsRelationManager;
 use App\Filament\Resources\UserResource\RelationManagers\RequisitionsRelationManager;
 use App\Models\User;
-use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
@@ -17,15 +15,12 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\IconColumn;
-use Filament\Tables\Columns\SelectColumn;
 use Filament\Tables\Columns\Summarizers\Count;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class UserResource extends Resource
 {
@@ -51,22 +46,21 @@ class UserResource extends Resource
                         Select::make('blood_group')
                         // ->relationship('bloodGroup','name')
                         // ->required(),
-                        ->options([
-                            1 => 'A+',
-                            2 => 'B+',
-                            3 => 'AB+',
-                            4 => 'O+',
-                            5 => 'A-',
-                            6 => 'B-',
-                            7 => 'AB-',
-                            8 => 'O-'
-                        ]),
+                            ->options([
+                                1 => 'A+',
+                                2 => 'B+',
+                                3 => 'AB+',
+                                4 => 'O+',
+                                5 => 'A-',
+                                6 => 'B-',
+                                7 => 'AB-',
+                                8 => 'O-',
+                            ]),
                         DatePicker::make('last_donated'),
                     ])
                     ->columns(3),
                 // ->compact(),
                 // ->collapsible(),
-
 
                 Section::make('Contact Information')
                     ->schema([
@@ -87,10 +81,6 @@ class UserResource extends Resource
                     ])->columns(3),
                 // ->addField(TextInput::make('name')),
 
-
-
-
-
             ]);
     }
 
@@ -107,7 +97,6 @@ class UserResource extends Resource
                     // ->suffix(fn (User $record) => $record->donations()->count() ? "({$record->donations()->count()})":"ooo")
                     ->description(fn (User $record) => $record->email),
 
-
                 IconColumn::make('donor')
                     ->boolean()
                     ->sortable(),
@@ -118,18 +107,18 @@ class UserResource extends Resource
                     ->searchable(isIndividual: true)
                     ->description(fn (User $record) => $record->secondary_contact),
                 TextColumn::make('emergency_contact')->searchable(),
-                TextColumn::make('bloodGroup.name')
-                    // ->disabled()
-                    // ->options([
-                    //     1 => 'A+',
-                    //     2 => 'B+',
-                    //     3 => 'AB+',
-                    //     4 => 'O+',
-                    //     5 => 'A-',
-                    //     6 => 'B-',
-                    //     7 => 'AB-',
-                    //     8 => 'O-'
-                    // ]),
+                TextColumn::make('bloodGroup.name'),
+                // ->disabled()
+                // ->options([
+                //     1 => 'A+',
+                //     2 => 'B+',
+                //     3 => 'AB+',
+                //     4 => 'O+',
+                //     5 => 'A-',
+                //     6 => 'B-',
+                //     7 => 'AB-',
+                //     8 => 'O-'
+                // ]),
             ])
             ->filters([
                 Filter::make('donor')
@@ -143,7 +132,7 @@ class UserResource extends Resource
                         5 => 'A-',
                         6 => 'B-',
                         7 => 'AB-',
-                        8 => 'O-'
+                        8 => 'O-',
                     ]),
             ])
             ->actions([
@@ -169,10 +158,12 @@ class UserResource extends Resource
             RequisitionsRelationManager::class,
         ];
     }
+
     public static function getGloballySearchableAttributes(): array
     {
         return ['name', 'primary_contact', 'secondary_contact', 'emergency_contact', 'last_donated'];
     }
+
     public static function getPages(): array
     {
         return [

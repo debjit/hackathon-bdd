@@ -17,10 +17,10 @@ class HospitalFactory extends Factory
     public function definition(): array
     {
         return [
-            'name'=>fake()->name,
-            'pincode'=>fake()->numberBetween(740000,742200),
-            'address'=> fake('en_IN')->address(),
-            'notes'=>fake()->text()
+            'name' => fake()->name,
+            'pincode' => fake()->numberBetween(740000, 742200),
+            'address' => fake('en_IN')->address(),
+            'notes' => fake()->text(),
         ];
     }
 }

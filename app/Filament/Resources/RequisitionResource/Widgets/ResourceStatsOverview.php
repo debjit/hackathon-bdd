@@ -7,7 +7,6 @@ use Filament\Widgets\StatsOverviewWidget\Stat;
 
 class ResourceStatsOverview extends BaseWidget
 {
-
     // protected static ?string $pollingInterval = null;
 
     protected function getStats(): array

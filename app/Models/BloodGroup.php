@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 class BloodGroup extends Model
 {
     use HasFactory;
+
     protected $fillable = ['name'];
 
     public function users(): BelongsToMany
