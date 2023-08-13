@@ -2,40 +2,36 @@
 
 FROM php:8.1-apache
 
-# Install necessary libraries
-RUN apt-get update && apt-get install -y \
-    libonig-dev \
-    libzip-dev\
-    && curl -sLS https://getcomposer.org/installer | php -- --install-dir=/usr/bin/ --filename=composer
 
-# Install PHP extensions
-RUN docker-php-ext-install \
-    mbstring \
-    zip
-
-# Copy Laravel application
-COPY . /var/www/html
-
-# Set working directory
+# Set the working directory inside the container
 WORKDIR /var/www/html
 
-# Install Composer
+# Install required dependencies
+RUN apt-get update && \
+    apt-get install -y \
+        libzip-dev \
+        zip \
+        unzip && \
+    rm -rf /var/lib/apt/lists/*
+
+# Install Composer globally
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Install dependencies
-RUN composer install
+# Set up the debjit user (replace "debjit" with your desired username)
+RUN groupadd --gid 1000 debjit && \
+    useradd --uid 1000 --gid debjit --shell /bin/bash --create-home debjit
 
-# Change ownership of our applications
-RUN chown -R www-data:www-data /var/www/html
+# Give ownership of the working directory to the debjit user
+RUN chown -R debjit:debjit /var/www/html
 
-RUN docker-php-ext-install mbstring
+# Switch to the debjit user
+USER debjit
 
-COPY .env.example .env
-RUN php artisan key:generate
+# Copy the Laravel application files into the container
+COPY . /var/www/html
 
-# Expose port 80
-EXPOSE 80
+# Expose port 8000 (you can change this if you are using a different port)
+EXPOSE 8000
 
-# Adjusting Apache configurations
-RUN a2enmod rewrite
-COPY docker/apache-config.conf /etc/apache2/sites-available/000-default.conf
+# Command to run the Laravel application using the built-in PHP development server
+CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]
