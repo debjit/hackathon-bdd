@@ -2,7 +2,7 @@
 FROM php:8.1-apache
 
 # Copy the Apache configuration file into the container
-COPY apache2.conf /etc/apache2/sites-available/000-default.conf
+COPY docker/apache2.conf /etc/apache2/sites-available/000-default.conf
 
 # Enable Apache module for URL rewriting
 RUN a2enmod rewrite
