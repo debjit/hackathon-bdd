@@ -31,7 +31,7 @@ USER debjit
 COPY . /var/www/html
 
 # Expose port 8000 (you can change this if you are using a different port)
-EXPOSE 80
+EXPOSE 8000
 
 # Command to run the Laravel application using the built-in PHP development server
 CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]
