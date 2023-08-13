@@ -1,3 +1,4 @@
+
 FROM php:8.1-apache
 
 # Install necessary libraries
@@ -17,7 +18,7 @@ COPY . /var/www/html
 WORKDIR /var/www/html
 
 # Install Composer
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+COPY --from=composer:latestusr/bin/composer / /usr/bin/composer
 
 # Install dependencies
 RUN composer install
@@ -25,6 +26,7 @@ RUN composer install
 # Change ownership of our applications
 RUN chown -R www-data:www-data /var/www/html
 
+# Install missing mbstring extension
 RUN docker-php-ext-install mbstring
 
 COPY .env.example .env
