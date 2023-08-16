@@ -1,40 +1,32 @@
+FROM webdevops/php-nginx:8.1-alpine
 
-FROM php:8.1-apache
-
-# Install necessary libraries
-RUN apt-get update && apt-get install -y \
-    libonig-dev \
-    libzip-dev
-
-# Install PHP extensions
+# Install Laravel framework system requirements (https://laravel.com/docs/8.x/deployment#optimizing-configuration-loading)
+RUN apk add oniguruma-dev postgresql-dev libxml2-dev
 RUN docker-php-ext-install \
-    mbstring \
-    zip
+        bcmath \
+        ctype \
+        fileinfo \
+        json \
+        mbstring \
+        pdo_mysql \
+        pdo_pgsql \
+        tokenizer \
+        xml
 
-# Copy Laravel application
-COPY . /var/www/html
+# Copy Composer binary from the Composer official Docker image
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Set working directory
-WORKDIR /var/www/html
+ENV WEB_DOCUMENT_ROOT /app/public
+ENV APP_ENV production
+WORKDIR /app
+COPY . .
 
-# Install Composer
-COPY --from=composer:latestusr/bin/composer / /usr/bin/composer
+RUN composer install --no-interaction --optimize-autoloader --no-dev
+# Optimizing Configuration loading
+RUN php artisan config:cache
+# Optimizing Route loading
+RUN php artisan route:cache
+# Optimizing View loading
+RUN php artisan view:cache
 
-# Install dependencies
-RUN composer install
-
-# Change ownership of our applications
-RUN chown -R www-data:www-data /var/www/html
-
-# Install missing mbstring extension
-RUN docker-php-ext-install mbstring
-
-COPY .env.example .env
-RUN php artisan key:generate
-
-# Expose port 80
-EXPOSE 80
-
-# Adjusting Apache configurations
-COPY docker/apache-config.conf /etc/apache2/sites-available/000-default.conf
-RUN a2enmod rewrite
+RUN chown -R application:application .
