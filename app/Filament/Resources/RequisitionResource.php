@@ -64,7 +64,7 @@ class RequisitionResource extends Resource
                         TextInput::make('primary_contact')
                             ->prefixIcon('heroicon-o-phone')
                             ->required()
-                            ->numeric()
+                            ->tel()
                             ->length(10),
                         TextInput::make('secondary_contact')
                             ->prefixIcon('heroicon-o-phone')
@@ -109,6 +109,8 @@ class RequisitionResource extends Resource
                         MarkdownEditor::make('notes'),
                         FileUpload::make('image')
                             ->image()
+                            ->directory('requisitons')
+                            // ->visibility('private')
                             ->imageEditor(),
 
                         Toggle::make('status')
@@ -130,6 +132,7 @@ class RequisitionResource extends Resource
                 TextColumn::make('required_blood_group.name')
                     ->label('Group')
                     ->badge()
+                    ->description(fn ($record) => $record->type->name)
                     ->sortable(),
                 TextColumn::make('patient_name')->badge()
                     ->description(fn ($record) => $record->email)
@@ -141,10 +144,10 @@ class RequisitionResource extends Resource
                 IconColumn::make('urgent')
                     ->boolean()
                     ->sortable(),
-
                 TextColumn::make('unit')
-                    ->badge()
-                    ->description(fn ($record) => $record->type->name),
+                    ->prefix('Needed: ')
+                    ->description(fn ($record) => 'Donated: ' . $record->donations()->count())
+                    ->badge(),
                 TextColumn::make('primary_contact')->label('Primary/Emergency contact')
                     ->searchable(isIndividual: true)
                     ->description(fn ($record) => $record->emergency_contact),

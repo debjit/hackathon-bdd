@@ -53,7 +53,31 @@ return [
             'url' => env('AWS_URL'),
             'endpoint' => env('AWS_ENDPOINT'),
             'use_path_style_endpoint' => env('AWS_USE_PATH_STYLE_ENDPOINT', false),
-            'throw' => false,
+            'throw' => true,
+        ],
+        // tebi.io hosting site.
+        'tebi' => [
+            'driver' => 's3',
+            'key' => env('TEBI_ACCESS_KEY_ID'),
+            'secret' => env('TEBI_SECRET_ACCESS_KEY'),
+            'region' => env('TEBI_DEFAULT_REGION'),
+            'bucket' => env('TEBI_BUCKET'),
+            'url' => env('TEBI_URL'),
+            'endpoint' => env('TEBI_ENDPOINT'),
+            'use_path_style_endpoint' => env('TEBI_USE_PATH_STYLE_ENDPOINT', false),
+            'throw' => true,
+        ],
+        // BlackBlaze B2 file system
+        'bb2' => [
+            'driver' => 's3',
+            'key' => env('BB2_ACCESS_KEY_ID'),
+            'secret' => env('BB2_SECRET_ACCESS_KEY'),
+            'region' => env('BB2_DEFAULT_REGION'),
+            'bucket' => env('BB2_BUCKET'),
+            'url' => env('BB2_URL'),
+            'endpoint' => env('BB2_ENDPOINT'),
+            'use_path_style_endpoint' => env('BB2_USE_PATH_STYLE_ENDPOINT', false),
+            'throw' => true,
         ],
 
     ],
