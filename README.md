@@ -18,6 +18,7 @@ $blood_groups = [
 ```
 ## Todo
 - [x] Status,([ongoing,closed])
+- [ ] Update users donation / requisitions links.
 - [ ] Create a setup file for first time user.
 - [ ] Add who can donate blood using a switch, action I guess.
 - [ ] Register User / new user.
