@@ -109,9 +109,9 @@ class RequisitionResource extends Resource
                         MarkdownEditor::make('notes'),
                         FileUpload::make('image')
                             ->image()
-                            ->disk('bb2')
                             ->directory('requisitons')
                             ->visibility('private')
+                            // ->visibility('public')
                             ->openable()
                             ->imageEditor(),
 

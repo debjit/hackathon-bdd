@@ -19,7 +19,7 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['*','https://hackathon-bdd.test/*'],
+    'allowed_origins' => ['https://hackathon-bdd.test/*','*'],
 
     'allowed_origins_patterns' => ['/https?:\/\/hackathon-bdd\.test\/?\z/'],
 
