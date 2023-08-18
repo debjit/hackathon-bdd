@@ -1,16 +1,22 @@
 
-FROM php:8.1-apache
+# FROM php:8.1-apache
 
-# Install necessary libraries
-RUN apt-get update && apt-get install -y \
-    libonig-dev \
-    libzip-dev
+# # Install necessary libraries
+# RUN apt-get update && apt-get install -y \
+#     libonig-dev \
+#     libzip-dev
 
-# Install PHP extensions
-RUN docker-php-ext-install \
-    mbstring \
-    zip
+# # Install PHP extensions
+# RUN docker-php-ext-install \
+#     mbstring \
+#     zip
+FROM laravelsail/php81-composer
 
+RUN apt-get update -y && apt-get install -y libpng-dev zlib1g-dev libicu-dev g++
+
+RUN docker-php-ext-configure intl
+
+RUN docker-php-ext-install exif gd intl zip
 # Copy Laravel application
 COPY . /var/www/html
 

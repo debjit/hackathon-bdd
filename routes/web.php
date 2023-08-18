@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,6 +21,16 @@ Route::get('/', function () {
     return Redirect::to('/admin');
 
 });
-// Route::get('/storagelink', function () {
-//     Artisan::call('storage:link');
-// });
+Route::get('/cache', function () {
+    Artisan::call('config:clear');
+    Artisan::call('view:clear');
+    Artisan::call('route:clear');
+    Artisan::call('optimize:clear');
+
+
+});
+Route::get('/storagelink', function () {
+    // Artisan::call('storage:link');
+    $test = Storage::disk('bb2')->put('example1.txt', 'Contents');
+    dd(env('BB2_USE_PATH_STYLE_ENDPOINT'),$test);
+});
