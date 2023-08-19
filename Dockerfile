@@ -22,7 +22,8 @@ WORKDIR /var/www/html
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 # Install dependencies
-RUN composer install
+# RUN composer install
+RUN composer upgrade
 
 # Change ownership of our applications
 RUN chown -R www-data:www-data /var/www/html
