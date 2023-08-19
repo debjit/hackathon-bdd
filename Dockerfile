@@ -35,7 +35,7 @@ RUN php artisan key:generate
 RUN php artisan storage:link
 
 # Expose port 8000
-EXPOSE 8000
+EXPOSE 80
 
 # Adjusting Apache configurations
 RUN a2enmod rewrite
