@@ -31,8 +31,9 @@ RUN docker-php-ext-install mbstring
 
 COPY .env.example .env
 RUN php artisan key:generate
+RUN php artisan storage:link
 
-# Expose port 80
+# Expose port 8000
 EXPOSE 8000
 
 # Adjusting Apache configurations
