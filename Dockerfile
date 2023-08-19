@@ -12,6 +12,13 @@ RUN docker-php-ext-install \
     zip \
     intl
 
+# Install MySQL
+RUN docker-php-ext-install mysqli pdo_mysql
+
+# Install PostgreSQL
+RUN apt-get install -y libpq-dev
+RUN docker-php-ext-install pgsql
+
 # Copy Laravel application
 COPY . /var/www/html
 
