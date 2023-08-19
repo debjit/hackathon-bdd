@@ -33,7 +33,7 @@ COPY .env.example .env
 RUN php artisan key:generate
 
 # Expose port 80
-EXPOSE 80
+EXPOSE 8000
 
 # Adjusting Apache configurations
 RUN a2enmod rewrite
