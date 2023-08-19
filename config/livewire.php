@@ -101,6 +101,9 @@ return [
     |
     */
 
+    // Custom config added
+    'asset_url' => env('APP_URL'),
+
     'inject_assets' => true,
 
     /*
