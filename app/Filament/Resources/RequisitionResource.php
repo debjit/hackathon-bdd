@@ -108,13 +108,16 @@ class RequisitionResource extends Resource
                     ->schema([
                         MarkdownEditor::make('notes'),
                         FileUpload::make('image')
-                            ->image()
+                            // ->image()
+                            ->multiple()
                             ->directory(env('REQUISITION_IMAGE_LOCATION') ? env('REQUISITION_IMAGE_LOCATION') : '')
                             // ->visibility('private')
-                            ->visibility('public')
+                            // ->visibility('public'),
                             ->openable()
-                            ->previewable()
-                            ->imageEditor(),
+                            // ->previewable()
+                            // ->imageEditor()
+                            ->previewable(false)
+                            ,
 
                         Toggle::make('status')
                             ->label('Active Requisition?')

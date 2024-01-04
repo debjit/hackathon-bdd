@@ -7,6 +7,11 @@ export default defineConfig({
             input: ['resources/css/app.css', 'resources/js/app.js'],
             refresh: true,
             // valetTls: env.APP_HOST,
+            cors: {
+                allowedOrigins: ['https://hackathon-bdd.test'],
+                allowedMethods: ["GET", "POST", "PUT"],
+                allowedHeaders: ["Content-Type", "Authorization"]
+            }
         }),
     ],
 });
